@@ -1,56 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Ace editor</title>
-	<link rel="stylesheet" href="./style/style.css"/>
-</head>
-<body>
-	<div class="loading-screen">
-		<div class="loading">
-		</div>
-		<h2>loading...</h2>
-	</div>
-	<div class="preview">
-		<i style="color: white; transform: translateX(20%)" class="fas fa-caret-right"></i>
-	</div>
-	<nav>
-		<ul>
-			<li><a href="#" data-id="editorHtml" class="active">HTML</a></li>
-			<li><a href="#" data-id="editorCSS">CSS</a></li>
-			<li><a href="#" data-id="editorJS">Javascript</a></li>
-			<li><a href="#" id="ot">Output</a></li>
-		</ul>
-	</nav>
-	<div class="editor-wrapper">
-		<div id="editorHtml"></div>b
-		<div id="editorCSS"></div>
-		<div id="editorJS"></div>
-	</div>
-	<div class="tools">
-		<button id="picker"><i class="fas fa-palette"></i></button>
-		<button id="moveUp"><i class="fas fa-arrow-to-top"></i></button>
-		<button id="moveDown"><i class="fas fa-arrow-to-bottom"></i></button>
-		<button id="copyLinesUp"><i class="fas fa-sort-size-up"></i></button>
-		<button id="copyLinesDown"><i class="fas fa-sort-size-down"></i></button>
-		<button id="tab">TAB</button>
-		<button id="undo"><i class="fas fa-undo"></i></button>
-		<button id="redo"><i class="fas fa-redo"></i></button>
-		<button id="arrowUp"><i class="fas fa-arrow-up"></i></button>
-		<button id="arrowDown"><i class="fas fa-arrow-down"></i></button>
-		<button id="arrowLeft"><i class="fas fa-arrow-left"></i></button>
-		<button id="arrowRight"><i class="fas fa-arrow-right"></i></button>
-		<button id="search"><i class="fas fa-search"></i></button>
-		<button id="beautify"><i class="fas fa-code"></i></button>
-		<button id="selectWord"><i class="fas fa-chevron-double-right"></i></button>
-		<button id="menu"><i class="fas fa-ellipsis-v"></i></button>
-	</div>
-	<script src="./js/_js-snippets.js"></script>
-	<script src="./js/scripts.js"></script>
-	<script src="./utils/swapChildren.js"></script>
-	<script src="./utils/simulateKey.js"></script>
-	<script src="./index.js"></script>
-</body>
+   <head>
+      <meta
+         name="description"
+         content="Simple editor for html and css and javascript with interactive console"
+      />
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      <title>Mobile Code Editor | Ace</title>
+      <link rel="stylesheet" href="./style/style.css" />
+      <link rel="shortcut icon" type="image/jpg" href="/favicon.png" />
+   </head>
+   <body>
+      <div class="modal">
+         <div class="modal-content">
+            <div class="closeBtn">&times;</div>
+            <h3>
+               <b>CTRL+S</b> to save the code in memory and preview the code
+            </h3>
+         </div>
+      </div>
+      <div class="loading-screen">
+         <div class="loading"></div>
+         <h2>loading...</h2>
+      </div>
+      <div class="preview">
+         <i
+            style="color: white; transform: translateX(20%);"
+            class="fas fa-caret-right"
+         ></i>
+      </div>
+      <nav>
+         <ul>
+            <li><a href="#" data-id="editorHtml" class="active">HTML</a></li>
+            <li><a href="#" data-id="editorCSS">CSS</a></li>
+            <li><a href="#" data-id="editorJS">Javascript</a></li>
+            <li><a href="#" id="ot">Output</a></li>
+         </ul>
+      </nav>
+      <div class="editor-wrapper">
+         <div id="editorHtml"></div>
+         <div id="editorCSS"></div>
+         <div id="editorJS"></div>
+      </div>
+      <div class="tools">
+         <button id="picker"><i class="fas fa-palette"></i></button>
+         <button id="moveUp"><i class="fas fa-arrow-to-top"></i></button>
+         <button id="moveDown"><i class="fas fa-arrow-to-bottom"></i></button>
+         <button id="copyLinesUp"><i class="fas fa-sort-size-up"></i></button>
+         <button id="copyLinesDown">
+            <i class="fas fa-sort-size-down"></i>
+         </button>
+         <button id="tab">TAB</button>
+         <button id="undo"><i class="fas fa-undo"></i></button>
+         <button id="redo"><i class="fas fa-redo"></i></button>
+         <button id="arrowUp"><i class="fas fa-arrow-up"></i></button>
+         <button id="arrowDown"><i class="fas fa-arrow-down"></i></button>
+         <button id="arrowLeft"><i class="fas fa-arrow-left"></i></button>
+         <button id="arrowRight"><i class="fas fa-arrow-right"></i></button>
+         <button id="search"><i class="fas fa-search"></i></button>
+         <button id="beautify"><i class="fas fa-code"></i></button>
+         <button id="selectWord">
+            <i class="fas fa-chevron-double-right"></i>
+         </button>
+         <button id="menu"><i class="fas fa-ellipsis-v"></i></button>
+      </div>
+      <script src="./js/_js-snippets.js"></script>
+      <script src="./js/scripts.js"></script>
+      <script src="./utils/swapChildren.js"></script>
+      <script src="./utils/simulateKey.js"></script>
+      <script src="./utils/storageManager.js"></script>
+      <script src="./index.js"></script>
+      <script>
+         document.addEventListener("keydown", (e) => {
+            if (e.ctrlKey && e.which === 83) {
+               e.preventDefault();
+               document.querySelector(".preview").click();
+            }
+         });
+         const modal = document.querySelector(".modal");
+         window.addEventListener("click", (e) => {
+            if (e.target === modal) modal.remove();
+         });
+         document.querySelector(".closeBtn").onclick = () => {
+            modal.remove();
+         };
+      </script>
+   </body>
 </html>
